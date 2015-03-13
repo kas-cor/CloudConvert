@@ -1,6 +1,5 @@
 import os
 import sys
-import signal
 import CloudConvert
 
 apikey = open("apikey.txt", "r").read().strip()
