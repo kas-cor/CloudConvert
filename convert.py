@@ -4,8 +4,6 @@ import CloudConvert
 
 apikey = open("apikey.txt", "r").read().strip()
 
-process = CloudConvert.ConversionProcess(apikey)
-
 def get_outputformat(f):
     ext = f.split(".")[-1]
     print("File: " + f)
@@ -36,6 +34,7 @@ for t in task:
     if CloudConvert.CloudConvert.is_possible(t['from'], t['to']):
         inputfile = t['filename']
         outputfile = t['filename'] + "." + t['to']
+        process = CloudConvert.ConversionProcess(apikey)
         process.init(inputfile, outputfile)
         print("start convert - " + inputfile + " to " + outputfile)
         process.start()
