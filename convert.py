@@ -2,7 +2,9 @@ import os
 import sys
 import CloudConvert
 
-apikey = open("apikey.txt", "r").read().strip()
+curdir = os.path.abspath(os.path.dirname(sys.argv[0]));
+
+apikey = open(curdir + "\\apikey.txt", "r").read().strip()
 
 def get_outputformat(f):
     ext = f.split(".")[-1]
@@ -44,3 +46,4 @@ for t in task:
         process.save()
         print("Open")
         os.system("start " + outputfile)
+        

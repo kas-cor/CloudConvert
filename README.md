@@ -1,4 +1,8 @@
-python-cloudconvert
+Python-CloudConvert
 ===================
 
-convert.py filename
+Create apikey.txt and insert your apikey from CloudConvert.com 
+
+```bash
+convert.py filename1 [filename2] [filename3] [...]
+```
