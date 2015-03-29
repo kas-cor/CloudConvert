@@ -38,3 +38,4 @@ nosetests.xml
 #Me
 apikey.txt
 /nbproject/private/
+.c9
