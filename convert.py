@@ -4,7 +4,7 @@ import CloudConvert
 
 curdir = os.path.abspath(os.path.dirname(sys.argv[0]));
 
-apikey = open(curdir + "\\apikey.txt", "r").read().strip()
+apikey = open(curdir + "/apikey.txt", "r").read().strip()
 
 def get_outputformat(f):
     ext = f.split(".")[-1]
@@ -34,9 +34,9 @@ def convert(apikey, inputfile, outputfile):
     process.start()
     print("waiting...")
     process.wait_for_completion()
-    print("Saving")
+    print("Saving " + outputfile)
     process.save()
-    print("Open")
+    print("Open " + outputfile)
     os.system("start " + outputfile)
 
 task = []
