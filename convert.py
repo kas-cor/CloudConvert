@@ -1,3 +1,5 @@
+# coding=utf-8
+
 import os
 import sys
 import CloudConvert
@@ -41,6 +43,7 @@ def convert(apikey, inputfile, outputfile):
 
 task = []
 for f in sys.argv[1:]:
+    f = f.decode('cp1251')
     if os.path.exists(f):
         task.append(get_outputformat(f))
 
