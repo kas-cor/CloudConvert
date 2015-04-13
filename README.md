@@ -4,5 +4,6 @@ Python-CloudConvert
 Create apikey.txt and insert your apikey from CloudConvert.com 
 
 ```bash
-convert.py filename1 [filename2] [filename3] [...]
+pip install requests
+convert.py path/to/filename1 [path/to/filename1] [path/to/filename1] [...]
 ```
