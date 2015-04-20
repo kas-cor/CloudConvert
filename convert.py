@@ -43,12 +43,17 @@ def convert(apikey, inputfile, outputfile):
     print('Open ' + outputfile)
     os.system('start ' + outputfile)
 
-files = []
-for f in sys.argv[1:]:
-    f = f.decode('cp1251')
-    if os.path.exists(f):
-        files.append(f)
 
+def get_files(arg):
+    ret = []
+    for file in arg:
+        file = file.decode('cp1251')
+        if os.path.exists(file):
+            ret.append(file)
+    return ret
+
+
+files = get_files(sys.argv[1:])
 task = []
 if len(files) != 0:
     while True:
