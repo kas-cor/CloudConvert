@@ -6,27 +6,27 @@ import CloudConvert
 
 curdir = os.path.abspath(os.path.dirname(sys.argv[0]));
 
-apikey = open(curdir + "/apikey.txt", "r").read().strip()
+apikey = open(curdir + '/apikey.txt', 'r').read().strip()
 
 
 def get_outputformat(f):
-    ext = f.split(".")[-1]
-    print("File: " + f)
-    print("Extension: " + ext)
+    ext = f.split('.')[-1]
+    print('File: ' + f)
+    print('Extension: ' + ext)
     outext = []
     n = 0
     for out in CloudConvert.CloudConvert.conversion_types(ext):
         n += 1
         outext.append(out['outputformat'])
-        print("%d - %s - type is %s, note \'%s\'" % (n, out['outputformat'], out['group'], out['shortnote']))
+        print('%d - %s - type is %s, note "%s"' % (n, out['outputformat'], out['group'], out['shortnote']))
     while True:
-        sel = raw_input("Select format (1 - " + str(n) + "): ")
+        sel = raw_input('Select format (1 - ' + str(n) + '): ')
         try:
             sel = int(sel)
         except ValueError:
-            print("Enter number")
+            print('Enter number')
             continue
-        if sel > 0 and sel <= n:
+        if 0 < sel <= n:
             break
     return {'filename': f, 'from': ext, 'to': outext[sel - 1]}
 
@@ -34,21 +34,37 @@ def get_outputformat(f):
 def convert(apikey, inputfile, outputfile):
     process = CloudConvert.ConversionProcess(apikey)
     process.init(inputfile, outputfile)
-    print("start convert - " + inputfile + " to " + outputfile)
+    print('start convert - ' + inputfile + ' to ' + outputfile)
     process.start()
-    print("waiting...")
+    print('waiting...')
     process.wait_for_completion()
-    print("Saving " + outputfile)
+    print('Saving ' + outputfile)
     process.save()
-    print("Open " + outputfile)
-    os.system("start " + outputfile)
+    print('Open ' + outputfile)
+    os.system('start ' + outputfile)
 
-
-task = []
+files = []
 for f in sys.argv[1:]:
     f = f.decode('cp1251')
     if os.path.exists(f):
-        task.append(get_outputformat(f))
+        files.append(f)
+
+task = []
+if len(files) != 0:
+    while True:
+        ans = raw_input('Convert all to pdf format (y/n):')
+        if ans.lower() == 'y':
+            for f in files:
+                task.append({'filename': f, 'from': f.split('.')[-1], 'to': 'pdf'})
+            break
+        elif ans.lower() == 'n':
+            for f in sys.argv[1:]:
+                task.append(get_outputformat(f))
+            break
+        else:
+            print('Enter "y" or "n"')
+else:
+    print('Use convert.py path/to/filename1 [path/to/filename2] [path/to/filename3] [...]')
 
 for t in task:
     if CloudConvert.CloudConvert.is_possible(t['from'], t['to']):
